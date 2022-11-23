@@ -1,0 +1,12 @@
+html {
+  background-color: antiquewhite;
+}
+
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 2.5% auto;
+  height: 95%;
+  width: 95%;
+}
