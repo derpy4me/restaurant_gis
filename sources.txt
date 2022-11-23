@@ -1,3 +1,0 @@
-https://www.webtips.dev/getting-the-best-places-in-town-with-the-google-maps-api
-https://developers.arcgis.com/
-https://console.cloud.google.com/

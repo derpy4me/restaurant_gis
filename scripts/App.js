@@ -1,5 +1,7 @@
+// Check if there is an object in session storage
 var currentPosition = JSON.parse(sessionStorage.getItem("currentLocation"));
 
+// If no object found in session storage, set default location
 if (!currentPosition) {
   currentPosition = {
     latitude: 40.7608,
@@ -7,6 +9,7 @@ if (!currentPosition) {
   };
 }
 
+// ARC GIS requirements
 require([
   "esri/config",
   "esri/Map",
@@ -16,12 +19,15 @@ require([
   "esri/widgets/Locate",
   "esri/layers/GraphicsLayer",
 ], function (esriConfig, Map, MapView, locator, Graphic, Locate, GraphicsLayer) {
-  esriConfig.apiKey = "REPLACE_GOOGLE_API_KEY";
+  // Replace the below text with ARC GIS api key
+  esriConfig.apiKey = "REPLACE_ARC_GIS_API_KEY";
 
+  // Create base map layer
   const map = new Map({
     basemap: "arcgis-navigation",
   });
 
+  // Show map layer and center based on location from session storage
   const view = new MapView({
     container: "viewDiv",
     map: map,
@@ -29,6 +35,10 @@ require([
     zoom: 11,
   });
 
+  /*
+   * Create location widget, which when clicked will add user location to session storage
+   * Will also center on user location
+   */
   const locateWidget = new Locate({
     view: view,
     useHeadingEnabled: false,
@@ -40,27 +50,18 @@ require([
       return view.goTo(options.target);
     },
   });
-  // const places = ["Choose a place type...", "Parks and Outdoors", "Coffee shop", "Gas station", "Food", "Hotel"];
 
-  const select = document.createElement("select", "");
-  select.setAttribute("class", "esri-widget esri-select");
-  select.setAttribute("style", "width: 175px; font-family: 'Avenir Next W00'; font-size: 1em");
-
+  // Create graphics layer for markers
   const graphicsLayer = new GraphicsLayer();
   map.add(graphicsLayer);
 
-  // places.forEach(function (place) {
-  //   const option = document.createElement("option");
-  //   option.value = place;
-  //   option.innerHTML = place;
-  //   select.appendChild(option);
-  // });
-
+  // Add location widget to top-left corner of map
   view.ui.add(locateWidget, "top-left");
-  // view.ui.add(select, "top-right");
 
+  // Get restaurant results from session storage
   const restaurantResults = JSON.parse(sessionStorage.getItem("restaurants"));
 
+  // Simple orange marker with white outline
   const simpleMarker = {
     type: "simple-marker",
     color: "orange",
@@ -70,11 +71,13 @@ require([
     },
   };
 
+  // Check if restaurants are available in session storage
   if (restaurantResults) {
     view.popup.close();
     view.graphics.removeAll();
     restaurantResults.forEach(function (result) {
       graphicsLayer.add(
+        // Add new marker with popup
         new Graphic({
           geometry: {
             type: "point",
@@ -94,59 +97,4 @@ require([
       );
     });
   }
-
-  // const locatorUrl = "http://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
-
-  // Find places and add them to the map
-  // function findPlaces(category, pt) {
-  //   locator
-  //     .addressToLocations(locatorUrl, {
-  //       location: pt,
-  //       categories: [category],
-  //       maxLocations: 50,
-  //       outFields: ["Place_addr", "PlaceName"],
-  //     })
-
-  //     .then(function (results) {
-  //       view.popup.close();
-  //       view.graphics.removeAll();
-
-  //       results.forEach(function (result) {
-  //         console.log(result.location);
-  //         console.log(result.attributes);
-  //         view.graphics.add(
-  //           new Graphic({
-  //             attributes: result.attributes, // Data attributes returned
-  //             geometry: result.location, // Point returned
-  //             symbol: {
-  //               type: "simple-marker",
-  //               color: "dodgerblue",
-  //               size: "20px",
-  //               outline: {
-  //                 color: "#ffffff",
-  //                 width: "2px",
-  //               },
-  //             },
-
-  //             popupTemplate: {
-  //               title: "{PlaceName}", // Data attribute names
-  //               content: "{Place_addr}",
-  //             },
-  //           })
-  //         );
-  //       });
-  //     });
-  // }
-
-  // Search for places in center of map
-  // view.watch("stationary", function (val) {
-  //   if (val) {
-  //     findPlaces(select.value, view.center);
-  //   }
-  // });
-
-  // Listen for category changes and find places
-  // select.addEventListener("change", function (event) {
-  //   findPlaces(event.target.value, view.center);
-  // });
 });

@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Find Popular Restaurants</title>
+  <title>Find Popular Restaurants in Your Area</title>
+  <!-- Get ARC GIS dependencies and styles -->
   <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
   <link rel="stylesheet" href="/css/map.css">
   <script src="https://js.arcgis.com/4.25/"></script>
@@ -11,8 +12,9 @@
 </head>
 
 <body>
+  <!-- Display the map -->
   <div id="viewDiv"></div>
-  <ol id="places"></ol>
+  <!-- Get Google places. Will need to replace Text with google cloud api key -->
   <script src="https://maps.googleapis.com/maps/api/js?key={REPLACE_GOOGLE_API_KEY}&libraries=places"></script>
   <script src="/scripts/bestRestaurants.js"></script>
 </body>
