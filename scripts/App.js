@@ -7,6 +7,7 @@ if (!currentPosition) {
     latitude: 40.7608,
     longitude: -111.891,
   };
+  sessionStorage.setItem("currentLocation", JSON.stringify(currentPosition));
 }
 
 // ARC GIS requirements
@@ -20,7 +21,7 @@ require([
   "esri/layers/GraphicsLayer",
 ], function (esriConfig, Map, MapView, locator, Graphic, Locate, GraphicsLayer) {
   // Replace the below text with ARC GIS api key
-  esriConfig.apiKey = "REPLACE_ARC_GIS_API_KEY";
+  esriConfig.apiKey = "REPLACE_ARC_GIS_KEY";
 
   // Create base map layer
   const map = new Map({

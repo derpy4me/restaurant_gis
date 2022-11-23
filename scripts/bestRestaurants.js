@@ -49,5 +49,7 @@ const request = {
 };
 
 const results = [];
+const places = document.getElementById("places");
+const service = new google.maps.places.PlacesService(places);
 
 service.nearbySearch(request, callback);

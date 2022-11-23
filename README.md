@@ -4,7 +4,7 @@ This ARC GIS application contains a small application to grab the user's current
 
 This application was an opportunity to learn ARC GIS and pave the way to creating more applications that could help user's find nice places to eat.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/EbUpI8WZhlk)
 
 # Development Environment
 
